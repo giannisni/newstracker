@@ -2,6 +2,42 @@
   text-align: center;
 }
 
+.chart-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.datepicker-container {
+  position: absolute;
+  z-index: 1000;  /* This ensures that the datepicker is on top of other elements */
+}
+
+
+.legend-table tr {
+  line-height: 2em !important;
+}
+
+.legend-table td div {
+  height: 12px !important; 
+}
+
+.line-chart {
+  height: 100px; /* or whatever height you desire */
+}
+
+
+.chart-container > div {
+  display: legacy;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 45%;
+}
+
+.chart-container > div > div {
+  width: 100%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,6 +48,22 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+.blue {
+  background-color: blue !important;
+  color: white !important;
+}
+
+.custom-button {
+  background-color: #00B5AD;
+  color: white;
+}
+
+.custom-button.active {
+  background-color: #21BA45;
+}
+
+
 
 .App-header {
   background-color: #282c34;

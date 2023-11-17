@@ -8,6 +8,8 @@ import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './App.css';
+import NivoPieChart from './NivoPieChart.tsx';
+// import  WordCloud  from './WordCloud.tsx';
 
 interface Data {
   x: string;
@@ -241,6 +243,53 @@ useEffect(() => {
   fetchData();
 }, [selectedKeywords1, dateRange.startDate, dateRange.endDate]);
 
+// Inside your App.tsx
+
+// Inside your App.tsx
+
+const [wordFrequencies, setWordFrequencies] = useState<PieChartData[]>([]);
+const startDate = '2023-01-01';
+const endDate = '2023-12-30';
+
+useEffect(() => {
+  // Fetch word frequencies from your backend
+  axios.get('http://localhost:8080/api/news/word-frequencies', {
+    params: {
+      startDate: startDate,
+      endDate: endDate
+    }
+  })
+  .then(response => {
+    const frequencies = Object.entries(response.data).map(([label, value]) => ({ id: label, label, value }));
+    setWordFrequencies(frequencies);
+  })
+  .catch(error => {
+    console.error("Error fetching word frequencies:", error);
+  });
+}, []);
+
+
+// //  Word Cloud
+// const [keywordFrequencies, setKeywordFrequencies] = useState<PieChartData[]>([]);
+
+
+// useEffect(() => {
+//   // Fetch keyword frequencies from your backend
+//   axios.get('http://localhost:8080/api/news/keyword-frequencies', {
+//     params: {
+//       startDate: startDate,
+//       endDate: endDate
+//     }
+//   })
+//   .then(response => {
+//     const frequencies = Object.entries(response.data).map(([label, value]) => ({ id: label, label, value }));
+//     setKeywordFrequencies(frequencies);
+//   })
+//   .catch(error => {
+//     console.error("Error fetching keyword frequencies:", error);
+//   });
+// }, []);
+
 // LegendTable component
 const LegendTable = ({ items, className }) => {
   return (
@@ -357,9 +406,12 @@ const LegendTable = ({ items, className }) => {
         ]}
     />
 </div>
-
-        
-      </div>
+<div><NivoPieChart data={wordFrequencies} />
+</div>
+{/* <div>
+      <WordCloud words={wordFrequencies} width={600} height={400} />
+    </div> */}
+    </div>
     </div>
   );
 }
